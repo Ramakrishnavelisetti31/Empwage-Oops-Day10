@@ -6,7 +6,8 @@ public class EmployeeWage {
     public static final int EMP_RATE_PER_HOUR = 20;
     public static final int MAX_WORKING_DAYS = 20;
     public static final int MAX_WORKING_HOURS = 100;
-    public static void main(String[] args) {
+
+    public static void empWage() {
         int empHrs, empWage;
         int day = 1;
         int totalHours = 0;
@@ -38,5 +39,8 @@ public class EmployeeWage {
         System.out.println("");
         System.out.println("Total Working Hours in Month is " + totalHours);
         System.out.println("Total EmployeeWage Per Month is " + totalWage);
+    }
+    public static void main(String[] args) {
+        empWage();
     }
 }

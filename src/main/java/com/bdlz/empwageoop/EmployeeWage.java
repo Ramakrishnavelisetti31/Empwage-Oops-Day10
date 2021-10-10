@@ -1,6 +1,6 @@
 package com.bdlz.empwageoop;
 
-public class EmployeeWage {
+public class EmployeeWage implements IEmpWageComputation {
     public static final int IS_PART_TIME = 1;
     public static final int IS_FULL_TIME = 2;
     private int numOfCompany = 0;
@@ -10,11 +10,11 @@ public class EmployeeWage {
         companyInfoArray = new CompanyInfo[2];
     }
 
-    private void addCompanyInfo(String companyName, int empRatePerHr, int maxWorkDays, int maxWorkHrs) {
+    public void addCompanyInfo(String companyName, int empRatePerHr, int maxWorkDays, int maxWorkHrs) {
         companyInfoArray[numOfCompany] = new CompanyInfo(companyName, empRatePerHr, maxWorkDays, maxWorkHrs);
         numOfCompany++;
     }
-    private void computeEmpWage() {
+    public void computeEmpWage() {
         for (int i = 0; i < numOfCompany; i++) {
             companyInfoArray[i].setTotalWage(this.computeEmpWage(companyInfoArray[i]));
             System.out.println(companyInfoArray[i]);
@@ -48,9 +48,9 @@ public class EmployeeWage {
     }
     public static void main(String[] args) {
         System.out.println("Welcome To Employee Wage Computation Program");
-        EmployeeWage wage = new EmployeeWage();
-        wage.addCompanyInfo("TATA", 20, 15, 60);
-        wage.addCompanyInfo("DMART", 18, 20, 90);
+        IEmpWageComputation wage = new EmployeeWage();
+        ((EmployeeWage) wage).addCompanyInfo("TATA", 20, 15, 60);
+        ((EmployeeWage) wage).addCompanyInfo("DMART", 18, 20, 90);
         wage.computeEmpWage();
     }
 }

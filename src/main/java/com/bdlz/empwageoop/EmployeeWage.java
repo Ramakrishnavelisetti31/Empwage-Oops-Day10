@@ -3,24 +3,30 @@ package com.bdlz.empwageoop;
 public class EmployeeWage {
     public static final int IS_PART_TIME = 1;
     public static final int IS_FULL_TIME = 2;
-    private final String company;
-    private final int empRatePerHr;
-    private final int maxWorkDays;
-    private final int maxWorkHrs;
-    private int totalWage;
+    private int numOfCompany = 0;
+    private CompanyInfo[] companyInfoArray;
 
-    public EmployeeWage(String company, int empRatePerHr, int maxWorkDays, int maxWorkHrs) {
-        this.company = company;
-        this.empRatePerHr = empRatePerHr;
-        this.maxWorkDays = maxWorkDays;
-        this.maxWorkHrs = maxWorkHrs;
+    public EmployeeWage() {
+        companyInfoArray = new CompanyInfo[2];
     }
 
-    public int empWage() {
+    private void addCompanyInfo(String companyName, int empRatePerHr, int maxWorkDays, int maxWorkHrs) {
+        companyInfoArray[numOfCompany] = new CompanyInfo(companyName, empRatePerHr, maxWorkDays, maxWorkHrs);
+        numOfCompany++;
+    }
+    private void computeEmpWage() {
+        for (int i = 0; i < numOfCompany; i++) {
+            companyInfoArray[i].setTotalWage(this.computeEmpWage(companyInfoArray[i]));
+            System.out.println(companyInfoArray[i]);
+        }
+    }
+
+    public int empWage(CompanyInfo companyInfo) {
         int empHrs, empWage;
         int day = 1;
         int totalHours = 0;
-        while (day <= maxWorkDays && totalHours <= maxWorkHrs) {
+        int totalWage = 0;
+        while (day <= companyInfo.getMaxWorkDays() && totalHours <= companyInfo.getMaxWorkHrs()) {
             day++;
             double empCheck = Math.floor(Math.random() * 10) % 3;
             switch ((int) empCheck) {
@@ -33,17 +39,18 @@ public class EmployeeWage {
                 default:
                     empHrs = 0;
             }
-            empWage = empHrs * empRatePerHr;
+            empWage = empHrs * companyInfo.getEmpRatePerHr();
             totalWage = totalWage + empWage;
             System.out.println("The Emp Wage for employee is " + empWage);
         }
-        System.out.println("The emp wage for employee in the " + company + " is " + totalWage);
+        System.out.println("The emp wage for employee in the " + companyInfo.getCompanyName() + " is " + totalWage);
         return totalWage;
     }
     public static void main(String[] args) {
-        EmployeeWage tata = new EmployeeWage("TATA", 20,15,60);
-        EmployeeWage dMart = new EmployeeWage("DMART", 18,20,90);
-        tata.empWage();
-        dMart.empWage();
+        System.out.println("Welcome To Employee Wage Computation Program");
+        EmployeeWage wage = new EmployeeWage();
+        wage.addCompanyInfo("TATA", 20, 15, 60);
+        wage.addCompanyInfo("DMART", 18, 20, 90);
+        wage.computeEmpWage();
     }
 }

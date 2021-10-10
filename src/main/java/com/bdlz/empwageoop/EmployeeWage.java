@@ -3,12 +3,23 @@ package com.bdlz.empwageoop;
 public class EmployeeWage {
     public static final int IS_PART_TIME = 1;
     public static final int IS_FULL_TIME = 2;
+    private final String company;
+    private final int empRatePerHr;
+    private final int maxWorkDays;
+    private final int maxWorkHrs;
+    private int totalWage;
 
-    public static int empWage(String company, int empRatePerHr, int maxWorkDays, int maxWorkHrs) {
+    public EmployeeWage(String company, int empRatePerHr, int maxWorkDays, int maxWorkHrs) {
+        this.company = company;
+        this.empRatePerHr = empRatePerHr;
+        this.maxWorkDays = maxWorkDays;
+        this.maxWorkHrs = maxWorkHrs;
+    }
+
+    public int empWage() {
         int empHrs, empWage;
         int day = 1;
         int totalHours = 0;
-        int totalWage = 0;
         while (day <= maxWorkDays && totalHours <= maxWorkHrs) {
             day++;
             double empCheck = Math.floor(Math.random() * 10) % 3;
@@ -30,7 +41,9 @@ public class EmployeeWage {
         return totalWage;
     }
     public static void main(String[] args) {
-        empWage("Cognizant", 15,18,100);
-        empWage("Accenture", 20,20,90);
+        EmployeeWage tata = new EmployeeWage("TATA", 20,15,60);
+        EmployeeWage dMart = new EmployeeWage("DMART", 18,20,90);
+        tata.empWage();
+        dMart.empWage();
     }
 }
